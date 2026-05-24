@@ -1,0 +1,10 @@
+version: v2
+inputs:
+  - directory: proto
+plugins:
+  - local: protoc-gen-ts_proto
+    out: src/grpc/generated
+    opt:
+      - outputServices=grpc-js
+      - esModuleInterop=true
+      - env=node
