@@ -72,17 +72,17 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Setup buf
-        uses: bufbuild/buf-setup-action@v1
+      # - name: Setup buf
+      #   uses: bufbuild/buf-setup-action@v1
 
-      - name: Generate proto files
-        run: buf generate
+      # - name: Generate proto files
+      #   run: buf generate
 
-      - name: Prisma generate
-        run: pnpm prisma generate
+      # - name: Prisma generate
+      #   run: pnpm prisma generate
 
-      - name: Prisma migrate
-        run: pnpm prisma migrate deploy
+      # - name: Prisma migrate
+      #   run: pnpm prisma migrate deploy
 
       # - name: Lint
       #   run: pnpm lint
