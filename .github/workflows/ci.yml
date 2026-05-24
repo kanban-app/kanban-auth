@@ -75,8 +75,8 @@ jobs:
       - name: Setup buf
         uses: bufbuild/buf-setup-action@v1
 
-      - name: Generate proto files
-        run: buf generate
+      - name: Generate proto
+        run: PATH="$PATH:./node_modules/.bin" buf generate
 
       - name: Prisma generate
         run: pnpm prisma generate
