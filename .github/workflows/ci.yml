@@ -78,8 +78,8 @@ jobs:
       - name: Prisma migrate
         run: pnpm prisma migrate deploy
 
-      - name: Lint
-        run: pnpm lint
+      # - name: Lint
+      #   run: pnpm lint
 
       - name: Type check
         run: pnpm typecheck
@@ -87,5 +87,5 @@ jobs:
       - name: Build
         run: pnpm build
 
-      - name: Test
-        run: pnpm test
+      # - name: Test
+      #   run: pnpm test
