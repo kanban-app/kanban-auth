@@ -76,7 +76,7 @@ jobs:
         uses: bufbuild/buf-setup-action@v1
 
       - name: Generate proto files
-        run: npx buf generate
+        run: buf generate
 
       - name: Prisma generate
         run: pnpm prisma generate
