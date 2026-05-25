@@ -27,5 +27,16 @@ jobs:
             set -e
             cd ~/kanban-auth
             git pull origin main
-            docker compose up -d --build
+            git submodule update --init
+            docker build -t kanban-auth .
+            docker stop kanban-auth-app || true
+            docker rm kanban-auth-app || true
+            docker run -d \
+              --name kanban-auth-app \
+              --network kanban-network \
+              --env-file .env \
+              -p 3001:3001 \
+              -p 50051:50051 \
+              --restart always \
+              kanban-auth
             docker image prune -f
