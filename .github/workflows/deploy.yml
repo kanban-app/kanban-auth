@@ -23,35 +23,35 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-        script: |
-          set -e
-          cd ~/kanban-auth
-          git pull origin main
-          git submodule update --init
-          docker build -t kanban-auth .
-          docker stop kanban-auth-app || true
-          docker rm kanban-auth-app || true
-          docker run -d \
-            --name kanban-auth-app \
-            --network kanban-network \
-            --env-file .env \
-            -p 3001:3001 \
-            -p 50051:50051 \
-            --restart always \
-            kanban-auth
+          script: |
+            set -e
+            cd ~/kanban-auth
+            git pull origin main
+            git submodule update --init
+            docker build -t kanban-auth .
+            docker stop kanban-auth-app || true
+            docker rm kanban-auth-app || true
+            docker run -d \
+              --name kanban-auth-app \
+              --network kanban-network \
+              --env-file .env \
+              -p 3001:3001 \
+              -p 50051:50051 \
+              --restart always \
+              kanban-auth
 
-          # Ждём пока сервис ответит на health check
-          echo "Waiting for service to be ready..."
-          for i in $(seq 1 30); do
-            if curl -sf http://localhost:3001/health > /dev/null 2>&1; then
-              echo "Service is ready"
-              break
-            fi
-            echo "Attempt $i/30..."
-            sleep 2
-          done
+            # Ждём пока сервис ответит на health check
+            echo "Waiting for service to be ready..."
+            for i in $(seq 1 30); do
+              if curl -sf http://localhost:3001/health > /dev/null 2>&1; then
+                echo "Service is ready"
+                break
+              fi
+              echo "Attempt $i/30..."
+              sleep 2
+            done
 
-          # Применяем миграции
-          docker exec kanban-auth-app ./node_modules/.bin/prisma migrate deploy
+            # Применяем миграции
+            docker exec kanban-auth-app ./node_modules/.bin/prisma migrate deploy
 
-          docker image prune -f
+            docker image prune -f
