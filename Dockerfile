@@ -1,6 +1,8 @@
 FROM node:20-alpine AS builder
 WORKDIR /app
 
+RUN apk add --no-cache openssl
+
 RUN corepack enable && corepack prepare pnpm@9 --activate
 
 RUN wget -qO /usr/local/bin/buf https://github.com/bufbuild/buf/releases/latest/download/buf-Linux-x86_64 \
